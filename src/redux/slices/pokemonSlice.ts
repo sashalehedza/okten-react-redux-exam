@@ -1,58 +1,42 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-export type Pokemon = {
-  name: string
-  url: string
-}
-
-type PokemonsResponse = {
-  count: number
-  next: string
-  previous: string
-  results: Pokemon[]
-}
-
-export type PokemonsState = {
-  response: PokemonsResponse
-  loading: boolean
-  error: string | null
-}
+import {
+  PokemonRespons,
+  PokemonsRespons,
+  PokemonsState,
+} from '../../models/IPokemon'
 
 const initialState: PokemonsState = {
   response: { results: [], count: 0, next: '', previous: '' },
   loading: false,
-  error: null,
+  pokemon: null,
+  sprites: {},
 }
 
-const fetchPokemons = createAsyncThunk<PokemonsResponse, string>(
+const fetchPokemons = createAsyncThunk<PokemonsRespons, string>(
   'pokemons/fetchPokemons',
   async (url) => {
-    const response = await axios.get<PokemonsResponse>(url)
-
-    console.log(response.data)
-
+    const response = await axios.get<PokemonsRespons>(url)
+    console.log('response.data', response.data)
     return response.data
   }
 )
 
-const fetchPokemonByName = createAsyncThunk<Pokemon, string>(
+const fetchPokemonByName = createAsyncThunk<PokemonRespons, string>(
   'pokemons/fetchPokemonByName',
-  async (name) => {
-    const response = await axios.get<Pokemon>(
-      `https://pokeapi.co/api/v2/pokemon/${name}`
+  async (id) => {
+    const response = await axios.get<PokemonRespons>(
+      `https://pokeapi.co/api/v2/pokemon/${id}`
     )
-
-    console.log(response.data)
-
     return response.data
   }
 )
 
-const fetchPokemonsByType = createAsyncThunk<PokemonsResponse, string>(
+const fetchPokemonsByType = createAsyncThunk<PokemonRespons, string>(
   'pokemons/fetchPokemonsByType',
   async (type) => {
-    const response = await axios.get<PokemonsResponse>(
+    const response = await axios.get<PokemonRespons>(
       `https://pokeapi.co/api/v2/type/${type}`
     )
 
@@ -62,15 +46,23 @@ const fetchPokemonsByType = createAsyncThunk<PokemonsResponse, string>(
   }
 )
 
-const fetchPokemonsByAbility = createAsyncThunk<PokemonsResponse, string>(
+const fetchPokemonsByAbility = createAsyncThunk<PokemonRespons, string>(
   'pokemons/fetchPokemonsByAbility',
   async (ability) => {
-    const response = await axios.get<PokemonsResponse>(
+    const response = await axios.get<PokemonRespons>(
       `https://pokeapi.co/api/v2/ability/${ability}`
     )
 
     console.log(response.data)
 
+    return response.data
+  }
+)
+
+const pokemonForms = createAsyncThunk<PokemonRespons, string>(
+  'pokemons/pokemonForms',
+  async (url) => {
+    const response = await axios.get<PokemonRespons>(url)
     return response.data
   }
 )
@@ -83,57 +75,33 @@ export const pokemonSlice = createSlice({
     builder
       .addCase(fetchPokemons.pending, (state) => {
         state.loading = true
-        state.error = null
       })
       .addCase(fetchPokemons.fulfilled, (state, { payload }) => {
         state.response = payload
         state.loading = false
       })
-      .addCase(fetchPokemons.rejected, (state, action) => {
+      .addCase(fetchPokemons.rejected, (state) => {
         state.loading = false
-        state.error = action.error.message || 'Failed to fetch pokemons'
       })
       .addCase(fetchPokemonByName.pending, (state) => {
         state.loading = true
-        state.error = null
       })
       .addCase(fetchPokemonByName.fulfilled, (state, { payload }) => {
-        state.response = {
-          results: [payload],
-          count: 1,
-          next: '',
-          previous: '',
-        }
+        state.pokemon = payload
         state.loading = false
       })
-      .addCase(fetchPokemonByName.rejected, (state, action) => {
+      .addCase(fetchPokemonByName.rejected, (state) => {
         state.loading = false
-        state.error = action.error.message || 'Failed to fetch pokemon by name'
       })
-      .addCase(fetchPokemonsByType.pending, (state) => {
+      .addCase(pokemonForms.pending, (state) => {
         state.loading = true
-        state.error = null
       })
-      .addCase(fetchPokemonsByType.fulfilled, (state, { payload }) => {
-        state.response = payload
+      .addCase(pokemonForms.fulfilled, (state, { payload }) => {
+        state.sprites = payload.sprites
         state.loading = false
       })
-      .addCase(fetchPokemonsByType.rejected, (state, action) => {
+      .addCase(pokemonForms.rejected, (state) => {
         state.loading = false
-        state.error = action.error.message || 'Failed to fetch pokemons by type'
-      })
-      .addCase(fetchPokemonsByAbility.pending, (state) => {
-        state.loading = true
-        state.error = null
-      })
-      .addCase(fetchPokemonsByAbility.fulfilled, (state, { payload }) => {
-        state.response = payload
-        state.loading = false
-      })
-      .addCase(fetchPokemonsByAbility.rejected, (state, action) => {
-        state.loading = false
-        state.error =
-          action.error.message || 'Failed to fetch pokemons by ability'
       })
   },
 })
@@ -144,4 +112,5 @@ export const pokemonActions = {
   fetchPokemonByName,
   fetchPokemonsByType,
   fetchPokemonsByAbility,
+  pokemonForms,
 }

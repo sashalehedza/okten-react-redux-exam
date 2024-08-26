@@ -13,7 +13,6 @@ const PokemonsPage = () => {
   const {
     loading,
     response: { count, next, previous },
-    error,
   } = useAppSelector((state) => state.pokemonSlice)
 
   useEffect(() => {
@@ -73,8 +72,6 @@ const PokemonsPage = () => {
         placeholder='Filter by ability'
       />
       <button onClick={handleFilterByAbility}>Filter by Ability</button>
-
-      {error && <div>Error: {error}</div>}
 
       <PokemonsList />
       <Pagination

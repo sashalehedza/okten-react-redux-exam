@@ -1,29 +1,30 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 
-export type SpriteKeys =
-  | 'back_default'
-  | 'back_female'
-  | 'back_shiny'
-  | 'back_shiny_female'
-  | 'front_default'
-  | 'front_female'
-  | 'front_shiny'
-  | 'front_shiny_female'
+import { useAppDispatch, useAppSelector } from '../../redux/store'
+
+import { pokemonActions } from '../../redux/slices/pokemonSlice'
 
 type PokemonSpritesProps = {
-  sprites: Record<SpriteKeys, string | null>
+  url: string
 }
 
-export const PokemonSprites: FC<PokemonSpritesProps> = ({ sprites }) => {
-  const spriteLabels: Record<SpriteKeys, string> = {
-    back_default: 'Back Default',
-    back_female: 'Back Female',
-    back_shiny: 'Back Shiny',
-    back_shiny_female: 'Back Shiny Female',
-    front_default: 'Front Default',
-    front_female: 'Front Female',
-    front_shiny: 'Front Shiny',
-    front_shiny_female: 'Front Shiny Female',
+export const PokemonSprites: FC<PokemonSpritesProps> = ({ url }) => {
+  const dispatch = useAppDispatch()
+
+  const sprites = useAppSelector((state) => state.pokemonSlice.sprites)
+
+  useEffect(() => {
+    try {
+      if (url) {
+        dispatch(pokemonActions.pokemonForms(url))
+      }
+    } catch (error) {
+      console.error('Error fetching Pokemon detail:', error)
+    }
+  }, [dispatch, url])
+
+  if (!sprites) {
+    return <div>Loading...</div>
   }
 
   return (
@@ -33,11 +34,9 @@ export const PokemonSprites: FC<PokemonSpritesProps> = ({ sprites }) => {
         {Object.entries(sprites).map(([key, url]) =>
           url ? (
             <li key={key}>
-              <span>{spriteLabels[key as SpriteKeys]}</span>
-              <br />
               <img
                 src={url}
-                alt={spriteLabels[key as SpriteKeys]}
+                alt={'Pokemon sprite'}
                 style={{ width: '100px', height: '100px' }}
               />
             </li>
