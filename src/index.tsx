@@ -13,12 +13,13 @@ import HomePage from './pages/HomePage'
 import PokemonDetail from './pages/pokemon/PokemonDetail'
 import PokemonsPage from './pages/pokemon/PokemonsPage'
 import theme from './theme'
+import { Typography } from '@mui/material'
 
 let router = createBrowserRouter([
   {
     path: '/',
     element: <MainLayout />,
-    errorElement: <h1>Error!</h1>,
+    errorElement: <Typography variant='h6'>Error!</Typography>,
     children: [
       {
         index: true,
