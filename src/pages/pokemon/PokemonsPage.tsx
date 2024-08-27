@@ -32,12 +32,20 @@ const PokemonsPage = () => {
   const handleSearch = () => {
     if (search) {
       dispatch(pokemonActions.fetchPokemonByName(search.toLowerCase()))
+    } else {
+      dispatch(
+        pokemonActions.fetchPokemons('https://pokeapi.co/api/v2/pokemon')
+      )
     }
   }
 
   const handleFilterByType = () => {
     if (filterType) {
       dispatch(pokemonActions.fetchPokemonsByType(filterType.toLowerCase()))
+    } else {
+      dispatch(
+        pokemonActions.fetchPokemons('https://pokeapi.co/api/v2/pokemon')
+      )
     }
   }
 
@@ -45,6 +53,10 @@ const PokemonsPage = () => {
     if (filterAbility) {
       dispatch(
         pokemonActions.fetchPokemonsByAbility(filterAbility.toLowerCase())
+      )
+    } else {
+      dispatch(
+        pokemonActions.fetchPokemons('https://pokeapi.co/api/v2/pokemon')
       )
     }
   }
