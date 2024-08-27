@@ -22,7 +22,7 @@ export type IPokemon = {
     latest: string
     legacy: string
   }
-  forms: Array<{ name: string; url: string }>
+  forms: [{ name: string; url: string }]
   game_indices: [
     {
       game_index: number
@@ -53,14 +53,26 @@ export type IPokemon = {
     front_shiny: string
     front_shiny_female: string
   }
-  stats: Array<{
-    base_stat: number
-    effort: number
-    stat: {
-      name: string
-      url: string
+  stats: [
+    {
+      base_stat: number
+      effort: number
+      stat: {
+        name: string
+        url: string
+      }
     }
-  }>
+  ]
+  types: [
+    {
+      slot: number
+      type: {
+        name: string
+        url: string
+      }
+    }
+  ]
+  weight: number
 }
 
 export type Sprites = Record<string, string>

@@ -10,6 +10,9 @@ import {
   CircularProgress,
   Container,
   Typography,
+  List,
+  ListItem,
+  ListItemText,
 } from '@mui/material'
 
 const PokemonDetail = () => {
@@ -40,6 +43,8 @@ const PokemonDetail = () => {
     )
   }
 
+  console.log('pokemon', pokemon)
+
   return (
     <Container maxWidth='sm' sx={{ mt: 4 }}>
       <Card>
@@ -56,6 +61,41 @@ const PokemonDetail = () => {
           />
           <Box mt={3}>
             <PokemonSprites url={pokemon.forms[0].url} />
+          </Box>
+
+          <Box mt={3}>
+            <Typography variant='h6'>Abilities</Typography>
+            <List>
+              {pokemon.abilities.map((ability, index) => (
+                <ListItem key={index}>
+                  <ListItemText primary={ability.ability.name} />
+                </ListItem>
+              ))}
+            </List>
+          </Box>
+
+          <Box mt={3}>
+            <Typography variant='h6'>Stats</Typography>
+            <List>
+              {pokemon.stats.map((stat, index) => (
+                <ListItem key={index}>
+                  <ListItemText
+                    primary={`${stat.stat.name}: ${stat.base_stat}`}
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </Box>
+
+          <Box mt={3}>
+            <Typography variant='h6'>Types</Typography>
+            <List>
+              {pokemon.types.map((type, index) => (
+                <ListItem key={index}>
+                  <ListItemText primary={type.type.name} />
+                </ListItem>
+              ))}
+            </List>
           </Box>
         </Box>
       </Card>
