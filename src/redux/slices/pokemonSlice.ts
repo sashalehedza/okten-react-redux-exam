@@ -2,8 +2,9 @@ import { createSlice } from '@reduxjs/toolkit'
 
 import { PokemonsState } from '../../models/IPokemon'
 import {
-  fetchPokemonByName,
   fetchPokemons,
+  fetchPokemonByName,
+  fetchPokemonByNamePage,
   pokemonForms,
   fetchPokemonsByType,
   fetchPokemonsByAbility,
@@ -52,6 +53,13 @@ export const pokemonSlice = createSlice({
       .addCase(fetchPokemonsByAbility.rejected, (state) => {
         state.loading = false
       })
+      .addCase(fetchPokemonByNamePage.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(fetchPokemonByNamePage.fulfilled, (state, { payload }) => {
+        state.pokemon = payload
+        state.loading = false
+      })
       .addCase(fetchPokemonByName.pending, (state) => {
         state.loading = true
       })
@@ -84,6 +92,7 @@ export const pokemonActions = {
   ...pokemonSlice.actions,
   fetchPokemons,
   fetchPokemonByName,
+  fetchPokemonByNamePage,
   fetchPokemonsByType,
   fetchPokemonsByAbility,
   pokemonForms,

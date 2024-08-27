@@ -20,6 +20,16 @@ export const fetchPokemonByName = createAsyncThunk(
   }
 )
 
+export const fetchPokemonByNamePage = createAsyncThunk(
+  'pokemons/fetchPokemonByNamePage',
+  async (id: string) => {
+    const response = await pokemonService.getByNamePage(id)
+    console.log('response.data', response)
+
+    return response
+  }
+)
+
 export const fetchPokemonsByType = createAsyncThunk(
   'pokemons/fetchPokemonsByType',
   async (type: string) => {

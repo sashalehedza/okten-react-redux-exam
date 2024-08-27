@@ -14,7 +14,7 @@ const PokemonDetail = () => {
   useEffect(() => {
     try {
       if (id) {
-        dispatch(pokemonActions.fetchPokemonByName(id))
+        dispatch(pokemonActions.fetchPokemonByNamePage(id))
       }
     } catch (error) {
       console.error('Error fetching Pokemon detail:', error)

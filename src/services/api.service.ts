@@ -18,6 +18,12 @@ export const pokemonService = {
     )
     return response.data
   },
+  getByNamePage: async (name: string) => {
+    let response = await axiosInstance.get<PokemonRespons>(
+      `${urls.pokemons.byName(name)}`
+    )
+    return response.data
+  },
   getByType: async (type: string) => {
     let response = await axiosInstance.get<PokemonsRespons>(
       `${urls.pokemons.byType(type)}`
