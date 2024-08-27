@@ -3,7 +3,7 @@ import { pokemonBaseUrl, urls } from '../constants/urls'
 import { IUser } from '../models/IUser'
 import { IPost } from '../models/IPost'
 import { IComment } from '../models/IComment'
-import { PokemonRespons, PokemonsRespons } from '../models/IPokemon'
+import { PokemonRespons, PokemonsRespons, Pokemon } from '../models/IPokemon'
 
 const axiosInstance = axios.create({
   // baseURL: baseUrl,
@@ -50,7 +50,7 @@ export const pokemonService = {
     return response.data
   },
   getByName: async (name: string) => {
-    let response = await axiosInstance.get<PokemonRespons>(
+    let response = await axiosInstance.get<Pokemon>(
       `${urls.pokemons.byName(name)}`
     )
     return response.data

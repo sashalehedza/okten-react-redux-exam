@@ -109,7 +109,12 @@ export const pokemonSlice = createSlice({
         state.loading = true
       })
       .addCase(fetchPokemonByName.fulfilled, (state, { payload }) => {
-        state.pokemon = payload
+        state.response = {
+          results: [payload],
+          count: 1,
+          next: '',
+          previous: '',
+        }
         state.loading = false
       })
       .addCase(fetchPokemonByName.rejected, (state) => {
