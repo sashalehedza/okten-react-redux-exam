@@ -43,8 +43,6 @@ const PokemonDetail = () => {
     )
   }
 
-  console.log('pokemon', pokemon)
-
   return (
     <Container maxWidth='sm' sx={{ mt: 4 }}>
       <Card>

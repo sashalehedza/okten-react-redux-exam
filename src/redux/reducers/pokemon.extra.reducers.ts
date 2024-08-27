@@ -5,7 +5,7 @@ export const fetchPokemons = createAsyncThunk(
   'pokemons/fetchPokemons',
   async (url: string) => {
     const response = await pokemonService.getAll(url)
-    console.log('response.data', response)
+
     return response
   }
 )
@@ -14,7 +14,6 @@ export const fetchPokemonByName = createAsyncThunk(
   'pokemons/fetchPokemonByName',
   async (id: string) => {
     const response = await pokemonService.getByName(id)
-    console.log('response.data', response)
 
     return response
   }
@@ -24,7 +23,6 @@ export const fetchPokemonByNamePage = createAsyncThunk(
   'pokemons/fetchPokemonByNamePage',
   async (id: string) => {
     const response = await pokemonService.getByNamePage(id)
-    console.log('response.data', response)
 
     return response
   }
@@ -40,8 +38,6 @@ export const fetchPokemonsByType = createAsyncThunk(
       url: item.pokemon.url,
     }))
 
-    console.log('response.data', transformedData)
-
     return transformedData
   }
 )
@@ -50,7 +46,6 @@ export const fetchPokemonsByAbility = createAsyncThunk(
   'pokemons/fetchPokemonsByAbility',
   async (ability: string) => {
     const response = await pokemonService.getByAbility(ability)
-    console.log('response.data', response)
 
     const transformedData = response.pokemon.map((item: any) => ({
       name: item.pokemon.name,
