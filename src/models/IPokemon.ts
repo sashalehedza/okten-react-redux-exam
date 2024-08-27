@@ -1,27 +1,11 @@
-type SpriteKeys =
-  | 'back_default'
-  | 'back_female'
-  | 'back_shiny'
-  | 'back_shiny_female'
-  | 'front_default'
-  | 'front_female'
-  | 'front_shiny'
-  | 'front_shiny_female'
-
-export type PokemonResponse = {
-  name: string
-  sprites: Record<SpriteKeys, string | null>
-  forms: Array<{ url: string }>
-}
-
-export type PokemonsRespons = {
+export type IPokemons = {
   count: number
   next: string
   previous: string
   results: Pokemon[]
 }
 
-export type PokemonRespons = {
+export type IPokemon = {
   name: string
   abilities: [
     {
@@ -87,8 +71,8 @@ export type Pokemon = {
 }
 
 export type PokemonsState = {
-  response: PokemonsRespons
+  response: IPokemons
   loading: boolean
-  pokemon: PokemonRespons | null
+  pokemon: IPokemon | null
   sprites: Sprites
 }

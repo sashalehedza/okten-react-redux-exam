@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { pokemonBaseUrl, urls } from '../constants/urls'
-import { PokemonRespons, PokemonsRespons, Pokemon } from '../models/IPokemon'
+import { IPokemon, IPokemons, Pokemon } from '../models/IPokemon'
 
 const axiosInstance = axios.create({
   baseURL: pokemonBaseUrl,
@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
 
 export const pokemonService = {
   getAll: async (url: string) => {
-    let response = await axiosInstance.get<PokemonsRespons>(url)
+    let response = await axiosInstance.get<IPokemons>(url)
     return response.data
   },
   getByName: async (name: string) => {
@@ -19,7 +19,7 @@ export const pokemonService = {
     return response.data
   },
   getByNamePage: async (name: string) => {
-    let response = await axiosInstance.get<PokemonRespons>(
+    let response = await axiosInstance.get<IPokemon>(
       `${urls.pokemons.byName(name)}`
     )
     return response.data
@@ -35,7 +35,7 @@ export const pokemonService = {
     return response.data
   },
   getForms: async (url: string) => {
-    let response = await axiosInstance.get<PokemonRespons>(url)
+    let response = await axiosInstance.get<IPokemon>(url)
     return response.data
   },
 }
