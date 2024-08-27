@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom/client'
-import './index.css'
+import { ThemeProvider } from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline'
 
 import { Provider } from 'react-redux'
 import { store } from './redux/store'
@@ -11,6 +12,7 @@ import MainLayout from './layouts/MainLayout'
 import HomePage from './pages/HomePage'
 import PokemonDetail from './pages/pokemon/PokemonDetail'
 import PokemonsPage from './pages/pokemon/PokemonsPage'
+import theme from './theme'
 
 let router = createBrowserRouter([
   {
@@ -37,6 +39,9 @@ let router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <Provider store={store}>
-    <RouterProvider router={router} />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </Provider>
 )

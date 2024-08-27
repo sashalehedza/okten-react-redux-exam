@@ -1,10 +1,9 @@
 import React from 'react'
+import { Button, Box } from '@mui/material'
 
 interface PaginationProps {
   previous: string | null
   next: string | null
-  currentPage: number
-  totalPages: number
   onPageChange: (url: string) => void
 }
 
@@ -26,21 +25,26 @@ const Pagination: React.FC<PaginationProps> = ({
   }
 
   return (
-    <div className='pagination'>
-      <button
+    <Box display='flex' justifyContent='center' my={4}>
+      <Button
         onClick={() => handlePreviousPageChange(previous)}
-        disabled={previous === null}
+        disabled={!previous}
+        variant='outlined'
+        color='primary'
+        sx={{ mr: 2 }}
       >
         Prev
-      </button>
+      </Button>
 
-      <button
+      <Button
         onClick={() => handleNextPageChange(next)}
-        disabled={next === null}
+        disabled={!next}
+        variant='outlined'
+        color='primary'
       >
         Next
-      </button>
-    </div>
+      </Button>
+    </Box>
   )
 }
 

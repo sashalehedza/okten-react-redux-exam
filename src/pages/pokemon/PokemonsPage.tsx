@@ -4,6 +4,16 @@ import { pokemonActions } from '../../redux/slices/pokemonSlice'
 import PokemonsList from './PokemonsList'
 import Pagination from './Pagination'
 
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  TextField,
+  Typography,
+  CircularProgress,
+} from '@mui/material'
+
 const PokemonsPage = () => {
   const dispatch = useAppDispatch()
   const [search, setSearch] = useState('')
@@ -12,7 +22,7 @@ const PokemonsPage = () => {
 
   const {
     loading,
-    response: { count, next, previous },
+    response: { next, previous },
   } = useAppSelector((state) => state.pokemonSlice)
 
   useEffect(() => {
@@ -44,44 +54,91 @@ const PokemonsPage = () => {
   }
 
   if (loading) {
-    return <div>Loading...</div>
+    return (
+      <Box
+        display='flex'
+        justifyContent='center'
+        alignItems='center'
+        minHeight='50vh'
+      >
+        <CircularProgress />
+      </Box>
+    )
   }
 
   return (
-    <div className='App'>
-      <input
-        type='text'
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder='Search Pokemon by name'
-      />
-      <button onClick={handleSearch}>Search</button>
+    <Container maxWidth='md'>
+      <Box my={4}>
+        <Typography variant='h4' component='h1' gutterBottom align='center'>
+          Pokemon Search and Filter
+        </Typography>
+      </Box>
 
-      <input
-        type='text'
-        value={filterType}
-        onChange={(e) => setFilterType(e.target.value)}
-        placeholder='Filter by type'
-      />
-      <button onClick={handleFilterByType}>Filter by Type</button>
+      <Grid container spacing={2} mb={3}>
+        <Grid item xs={12} sm={4}>
+          <TextField
+            fullWidth
+            label='Search Pokemon by name'
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            variant='outlined'
+          />
+        </Grid>
+        <Grid item xs={12} sm={2}>
+          <Button
+            variant='contained'
+            color='primary'
+            onClick={handleSearch}
+            fullWidth
+          >
+            Search
+          </Button>
+        </Grid>
 
-      <input
-        type='text'
-        value={filterAbility}
-        onChange={(e) => setFilterAbility(e.target.value)}
-        placeholder='Filter by ability'
-      />
-      <button onClick={handleFilterByAbility}>Filter by Ability</button>
+        <Grid item xs={12} sm={3}>
+          <TextField
+            fullWidth
+            label='Filter by type'
+            value={filterType}
+            onChange={(e) => setFilterType(e.target.value)}
+            variant='outlined'
+          />
+        </Grid>
+        <Grid item xs={12} sm={3}>
+          <Button
+            variant='contained'
+            color='secondary'
+            onClick={handleFilterByType}
+            fullWidth
+          >
+            Filter by Type
+          </Button>
+        </Grid>
+
+        <Grid item xs={12} sm={3}>
+          <TextField
+            fullWidth
+            label='Filter by ability'
+            value={filterAbility}
+            onChange={(e) => setFilterAbility(e.target.value)}
+            variant='outlined'
+          />
+        </Grid>
+        <Grid item xs={12} sm={3}>
+          <Button
+            variant='contained'
+            color='secondary'
+            onClick={handleFilterByAbility}
+            fullWidth
+          >
+            Filter by Ability
+          </Button>
+        </Grid>
+      </Grid>
 
       <PokemonsList />
-      <Pagination
-        currentPage={1}
-        next={next}
-        previous={previous}
-        onPageChange={onPageChange}
-        totalPages={count}
-      />
-    </div>
+      <Pagination next={next} previous={previous} onPageChange={onPageChange} />
+    </Container>
   )
 }
 

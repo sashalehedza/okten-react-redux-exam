@@ -1,23 +1,38 @@
+import React from 'react'
 import { NavLink } from 'react-router-dom'
-import styles from './HeaderComponent.module.css'
+import { AppBar, Toolbar, Typography, Button } from '@mui/material'
 
 const HeaderComponent = () => {
   return (
-    <div className={styles.header}>
-      <ul className={styles.nav}>
-        <li>
-          <NavLink to={'/'} className={styles.navItem}>
+    <AppBar position='static'>
+      <Toolbar>
+        <Typography variant='h6' sx={{ flexGrow: 1 }}>
+          My App
+        </Typography>
+        <Button color='inherit'>
+          <NavLink
+            to='/'
+            style={({ isActive }) => ({
+              textDecoration: 'none',
+              color: isActive ? 'red' : 'white',
+            })}
+          >
             Home
           </NavLink>
-        </li>
-        <li>
-          <NavLink to={'/pokemons'} className={styles.navItem}>
+        </Button>
+        <Button color='inherit'>
+          <NavLink
+            to='/pokemons'
+            style={({ isActive }) => ({
+              textDecoration: 'none',
+              color: isActive ? 'red' : 'white',
+            })}
+          >
             Pokemons
           </NavLink>
-        </li>
-      </ul>
-      <hr className={styles.hr} />
-    </div>
+        </Button>
+      </Toolbar>
+    </AppBar>
   )
 }
 

@@ -1,11 +1,20 @@
 import React from 'react'
-import styles from './FooterComponent.module.css'
+import { Box, Typography } from '@mui/material'
 
 const FooterComponent = () => {
   return (
-    <div className={styles.footer}>
-      <p className={styles.footerText}>sashalehedza</p>
-    </div>
+    <Box
+      component='footer'
+      sx={{
+        backgroundColor: 'primary.main',
+        color: 'white',
+        textAlign: 'center',
+        padding: '16px',
+        width: '100%',
+      }}
+    >
+      <Typography variant='body1'>sashalehedza</Typography>
+    </Box>
   )
 }
 
