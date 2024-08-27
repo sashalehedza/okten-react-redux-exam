@@ -1,11 +1,13 @@
 import axios from 'axios'
-import { baseUrl, urls } from '../constants/urls'
+import { pokemonBaseUrl, urls } from '../constants/urls'
 import { IUser } from '../models/IUser'
 import { IPost } from '../models/IPost'
 import { IComment } from '../models/IComment'
+import { PokemonRespons, PokemonsRespons } from '../models/IPokemon'
 
 const axiosInstance = axios.create({
-  baseURL: baseUrl,
+  // baseURL: baseUrl,
+  baseURL: pokemonBaseUrl,
   headers: {},
 })
 
@@ -38,6 +40,35 @@ export const commentService = {
     let response = await axiosInstance.get<IComment[]>(
       `${urls.comments.byPostId(postId)}`
     )
+    return response.data
+  },
+}
+
+export const pokemonService = {
+  getAll: async (url: string) => {
+    let response = await axiosInstance.get<PokemonsRespons>(url)
+    return response.data
+  },
+  getByName: async (name: string) => {
+    let response = await axiosInstance.get<PokemonRespons>(
+      `${urls.pokemons.byName(name)}`
+    )
+    return response.data
+  },
+  getByType: async (type: string) => {
+    let response = await axiosInstance.get<PokemonsRespons>(
+      `${urls.pokemons.byType(type)}`
+    )
+    return response.data
+  },
+  getByAbility: async (ability: string) => {
+    let response = await axiosInstance.get<PokemonsRespons>(
+      `${urls.pokemons.byAbility(ability)}`
+    )
+    return response.data
+  },
+  getForms: async (url: string) => {
+    let response = await axiosInstance.get<PokemonRespons>(url)
     return response.data
   },
 }

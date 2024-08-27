@@ -1,4 +1,5 @@
 const baseUrl = 'https://jsonplaceholder.typicode.com'
+const pokemonBaseUrl = 'https://pokeapi.co/api/v2'
 
 const urls = {
   users: {
@@ -15,6 +16,15 @@ const urls = {
     byId: (id: number): string => urls.comments.base + `${id}`,
     byPostId: (id: number): string => urls.comments.base + `?postId=${id}`,
   },
+  pokemons: {
+    base: '/pokemon',
+    byId: (id: number): string => pokemonBaseUrl + `/pokemon/${id}`,
+    byName: (name: string): string => pokemonBaseUrl + `/pokemon/${name}`,
+    byType: (type: string): string => pokemonBaseUrl + `/type/${type}`,
+    byAbility: (ability: string): string =>
+      pokemonBaseUrl + `/ability/${ability}`,
+    forms: (url: string): string => pokemonBaseUrl + url,
+  },
 }
 
-export { urls, baseUrl }
+export { urls, baseUrl, pokemonBaseUrl }

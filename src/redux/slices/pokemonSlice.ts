@@ -1,11 +1,13 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
+import { createSlice } from '@reduxjs/toolkit'
 
+import { PokemonsState } from '../../models/IPokemon'
 import {
-  PokemonRespons,
-  PokemonsRespons,
-  PokemonsState,
-} from '../../models/IPokemon'
+  fetchPokemonByName,
+  fetchPokemons,
+  pokemonForms,
+  fetchPokemonsByType,
+  fetchPokemonsByAbility,
+} from '../reducers/pokemon.extra.reducers'
 
 const initialState: PokemonsState = {
   response: { results: [], count: 0, next: '', previous: '' },
@@ -14,58 +16,58 @@ const initialState: PokemonsState = {
   sprites: {},
 }
 
-const fetchPokemons = createAsyncThunk<PokemonsRespons, string>(
-  'pokemons/fetchPokemons',
-  async (url) => {
-    const response = await axios.get<PokemonsRespons>(url)
-    console.log('response.data', response.data)
-    return response.data
-  }
-)
+// const fetchPokemons = createAsyncThunk<PokemonsRespons, string>(
+//   'pokemons/fetchPokemons',
+//   async (url) => {
+//     const response = await axios.get<PokemonsRespons>(url)
+//     console.log('response.data', response.data)
+//     return response.data
+//   }
+// )
 
-const fetchPokemonByName = createAsyncThunk<PokemonRespons, string>(
-  'pokemons/fetchPokemonByName',
-  async (id) => {
-    const response = await axios.get<PokemonRespons>(
-      `https://pokeapi.co/api/v2/pokemon/${id}`
-    )
-    return response.data
-  }
-)
+// const fetchPokemonByName = createAsyncThunk<PokemonRespons, string>(
+//   'pokemons/fetchPokemonByName',
+//   async (id) => {
+//     const response = await axios.get<PokemonRespons>(
+//       `https://pokeapi.co/api/v2/pokemon/${id}`
+//     )
+//     return response.data
+//   }
+// )
 
-const fetchPokemonsByType = createAsyncThunk<PokemonRespons, string>(
-  'pokemons/fetchPokemonsByType',
-  async (type) => {
-    const response = await axios.get<PokemonRespons>(
-      `https://pokeapi.co/api/v2/type/${type}`
-    )
+// const fetchPokemonsByType = createAsyncThunk<PokemonRespons, string>(
+//   'pokemons/fetchPokemonsByType',
+//   async (type) => {
+//     const response = await axios.get<PokemonRespons>(
+//       `https://pokeapi.co/api/v2/type/${type}`
+//     )
 
-    console.log(response.data)
+//     console.log(response.data)
 
-    return response.data
-  }
-)
+//     return response.data
+//   }
+// )
 
-const fetchPokemonsByAbility = createAsyncThunk<PokemonRespons, string>(
-  'pokemons/fetchPokemonsByAbility',
-  async (ability) => {
-    const response = await axios.get<PokemonRespons>(
-      `https://pokeapi.co/api/v2/ability/${ability}`
-    )
+// const fetchPokemonsByAbility = createAsyncThunk<PokemonRespons, string>(
+//   'pokemons/fetchPokemonsByAbility',
+//   async (ability) => {
+//     const response = await axios.get<PokemonRespons>(
+//       `https://pokeapi.co/api/v2/ability/${ability}`
+//     )
 
-    console.log(response.data)
+//     console.log(response.data)
 
-    return response.data
-  }
-)
+//     return response.data
+//   }
+// )
 
-const pokemonForms = createAsyncThunk<PokemonRespons, string>(
-  'pokemons/pokemonForms',
-  async (url) => {
-    const response = await axios.get<PokemonRespons>(url)
-    return response.data
-  }
-)
+// const pokemonForms = createAsyncThunk<PokemonRespons, string>(
+//   'pokemons/pokemonForms',
+//   async (url) => {
+//     const response = await axios.get<PokemonRespons>(url)
+//     return response.data
+//   }
+// )
 
 export const pokemonSlice = createSlice({
   name: 'pokemon',
@@ -81,6 +83,26 @@ export const pokemonSlice = createSlice({
         state.loading = false
       })
       .addCase(fetchPokemons.rejected, (state) => {
+        state.loading = false
+      })
+      .addCase(fetchPokemonsByType.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(fetchPokemonsByType.fulfilled, (state, { payload }) => {
+        state.response = payload
+        state.loading = false
+      })
+      .addCase(fetchPokemonsByType.rejected, (state) => {
+        state.loading = false
+      })
+      .addCase(fetchPokemonsByAbility.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(fetchPokemonsByAbility.fulfilled, (state, { payload }) => {
+        state.response = payload
+        state.loading = false
+      })
+      .addCase(fetchPokemonsByAbility.rejected, (state) => {
         state.loading = false
       })
       .addCase(fetchPokemonByName.pending, (state) => {
