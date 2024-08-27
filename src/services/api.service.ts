@@ -1,48 +1,11 @@
 import axios from 'axios'
 import { pokemonBaseUrl, urls } from '../constants/urls'
-import { IUser } from '../models/IUser'
-import { IPost } from '../models/IPost'
-import { IComment } from '../models/IComment'
 import { PokemonRespons, PokemonsRespons, Pokemon } from '../models/IPokemon'
 
 const axiosInstance = axios.create({
-  // baseURL: baseUrl,
   baseURL: pokemonBaseUrl,
   headers: {},
 })
-
-export const userService = {
-  getAll: async () => {
-    const response = await axiosInstance.get<IUser[]>(urls.users.base)
-    return response.data
-  },
-}
-
-export const postService = {
-  getAll: async () => {
-    let response = await axiosInstance.get<IPost[]>(urls.posts.base)
-    return response.data
-  },
-  getByUserId: async (userId: number) => {
-    let response = await axiosInstance.get<IPost[]>(
-      `${urls.posts.byUserId(userId)}`
-    )
-    return response.data
-  },
-}
-
-export const commentService = {
-  getAll: async () => {
-    let response = await axiosInstance.get<IComment[]>(urls.comments.base)
-    return response.data
-  },
-  getByPostId: async (postId: number) => {
-    let response = await axiosInstance.get<IComment[]>(
-      `${urls.comments.byPostId(postId)}`
-    )
-    return response.data
-  },
-}
 
 export const pokemonService = {
   getAll: async (url: string) => {
