@@ -25,13 +25,11 @@ export const pokemonService = {
     return response.data
   },
   getByType: async (type: string) => {
-    let response = await axiosInstance.get<PokemonsRespons>(
-      `${urls.pokemons.byType(type)}`
-    )
+    let response = await axiosInstance.get(`${urls.pokemons.byType(type)}`)
     return response.data
   },
   getByAbility: async (ability: string) => {
-    let response = await axiosInstance.get<PokemonsRespons>(
+    let response = await axiosInstance.get(
       `${urls.pokemons.byAbility(ability)}`
     )
     return response.data

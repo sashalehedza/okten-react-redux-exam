@@ -37,7 +37,7 @@ export const pokemonSlice = createSlice({
         state.loading = true
       })
       .addCase(fetchPokemonsByType.fulfilled, (state, { payload }) => {
-        state.response = payload
+        state.response = { results: payload, count: 0, next: '', previous: '' }
         state.loading = false
       })
       .addCase(fetchPokemonsByType.rejected, (state) => {
@@ -47,7 +47,7 @@ export const pokemonSlice = createSlice({
         state.loading = true
       })
       .addCase(fetchPokemonsByAbility.fulfilled, (state, { payload }) => {
-        state.response = payload
+        state.response = { results: payload, count: 0, next: '', previous: '' }
         state.loading = false
       })
       .addCase(fetchPokemonsByAbility.rejected, (state) => {
