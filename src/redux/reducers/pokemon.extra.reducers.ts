@@ -65,6 +65,7 @@ export const pokemonForms = createAsyncThunk(
   'pokemons/pokemonForms',
   async (url: string) => {
     const response = await pokemonService.getForms(url)
+
     return response
   }
 )
